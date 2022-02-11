@@ -34,5 +34,17 @@ namespace smart_lightbulb_winforms.Properties {
                 this["hostname"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int battery {
+            get {
+                return ((int)(this["battery"]));
+            }
+            set {
+                this["battery"] = value;
+            }
+        }
     }
 }

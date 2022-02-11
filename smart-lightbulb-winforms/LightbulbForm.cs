@@ -4,7 +4,7 @@ namespace smart_lightbulb_winforms;
 
 public partial class LightbulbForm : Form
 {
-    const string cs = "IdScope=0ne003861C6;Auth=X509;X509key=cert.pfx|1234";
+    const string cs = "IdScope=0ne00434908;Auth=X509;X509key=cert.pfx|1234";
     smartlightbulb? client;
     int currentBattery = 100;
 
@@ -25,7 +25,12 @@ public partial class LightbulbForm : Form
         {
             string host = Properties.Settings.Default.hostname;
             client = await smartlightbulb.CreateClientAsync(new ConnectionSettings(cs) { HostName = host, IdScope = null});
-        }    
+        }
+        
+        if (Properties.Settings.Default.battery>0)
+        {
+            currentBattery = Properties.Settings.Default.battery;
+        }
 
         labelStatus.Text = $"{client.ConnectionSettings.DeviceId} connected to {client.ConnectionSettings.HostName}";
         client.Property_lightState.OnProperty_Updated = Property_lightState_UpdateHandler;
@@ -49,11 +54,14 @@ public partial class LightbulbForm : Form
                     Version = 0
                 };
                 await client.Property_lightState.ReportPropertyAsync();
+                UpdateUI();
+                
             }
 
             if (client.Property_lightState.PropertyValue.Value.Equals(LightStateEnum.On))
             {
                 await client.Telemetry_batteryLife.SendTelemetryAsync(currentBattery--);
+                progressBar1.Value = currentBattery;
             }
             await Task.Delay(1000);
         }
@@ -135,5 +143,26 @@ public partial class LightbulbForm : Form
             Version = p.Version
         };
         return await Task.FromResult(ack);
+    }
+
+    private async void buttonReplaceBateries_Click(object sender, EventArgs e)
+    {
+        ArgumentNullException.ThrowIfNull(client);
+        currentBattery = 100;
+        client.Property_lastBatteryReplacement.PropertyValue = DateTime.Now;
+        await client.Property_lastBatteryReplacement.ReportPropertyAsync();
+    }
+
+    private void LightbulbForm_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        Properties.Settings.Default.battery = currentBattery;
+        Properties.Settings.Default.Save();
+    }
+
+    private void labelStatus_Click(object sender, EventArgs e)
+    {
+        Properties.Settings.Default.hostname = "";
+        Properties.Settings.Default.battery = 100;
+        Properties.Settings.Default.Save();
     }
 }

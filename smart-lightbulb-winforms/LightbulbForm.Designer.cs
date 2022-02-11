@@ -31,6 +31,8 @@ partial class LightbulbForm
             this.pictureBoxLightbulb = new System.Windows.Forms.PictureBox();
             this.buttonOnOff = new System.Windows.Forms.Button();
             this.labelStatus = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.buttonReplaceBateries = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLightbulb)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,11 +47,11 @@ partial class LightbulbForm
             // 
             // buttonOnOff
             // 
-            this.buttonOnOff.Location = new System.Drawing.Point(38, 456);
+            this.buttonOnOff.Location = new System.Drawing.Point(38, 470);
             this.buttonOnOff.Name = "buttonOnOff";
             this.buttonOnOff.Size = new System.Drawing.Size(75, 23);
             this.buttonOnOff.TabIndex = 1;
-            this.buttonOnOff.Text = "button1";
+            this.buttonOnOff.Text = "On/Off";
             this.buttonOnOff.UseVisualStyleBackColor = true;
             this.buttonOnOff.Click += new System.EventHandler(this.ButtonOnOff_Click);
             // 
@@ -62,17 +64,40 @@ partial class LightbulbForm
             this.labelStatus.Size = new System.Drawing.Size(109, 25);
             this.labelStatus.TabIndex = 2;
             this.labelStatus.Text = "Connecting";
+            this.labelStatus.Click += new System.EventHandler(this.labelStatus_Click);
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(38, 435);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(300, 30);
+            this.progressBar1.Step = 1;
+            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.progressBar1.TabIndex = 3;
+            // 
+            // buttonReplaceBateries
+            // 
+            this.buttonReplaceBateries.Location = new System.Drawing.Point(205, 470);
+            this.buttonReplaceBateries.Name = "buttonReplaceBateries";
+            this.buttonReplaceBateries.Size = new System.Drawing.Size(133, 23);
+            this.buttonReplaceBateries.TabIndex = 4;
+            this.buttonReplaceBateries.Text = "Replace Bateries";
+            this.buttonReplaceBateries.UseVisualStyleBackColor = true;
+            this.buttonReplaceBateries.Click += new System.EventHandler(this.buttonReplaceBateries_Click);
             // 
             // LightbulbForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 555);
+            this.ClientSize = new System.Drawing.Size(498, 555);
+            this.Controls.Add(this.buttonReplaceBateries);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.buttonOnOff);
             this.Controls.Add(this.pictureBoxLightbulb);
             this.Name = "LightbulbForm";
             this.Text = "Smart Lightbulb";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LightbulbForm_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLightbulb)).EndInit();
             this.ResumeLayout(false);
@@ -85,4 +110,6 @@ partial class LightbulbForm
     private PictureBox pictureBoxLightbulb;
     private Button buttonOnOff;
     private Label labelStatus;
+    private ProgressBar progressBar1;
+    private Button buttonReplaceBateries;
 }
