@@ -58,10 +58,10 @@ partial class LightbulbForm
             // labelStatus
             // 
             this.labelStatus.AutoSize = true;
-            this.labelStatus.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelStatus.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.labelStatus.Location = new System.Drawing.Point(38, 20);
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(109, 25);
+            this.labelStatus.Size = new System.Drawing.Size(89, 21);
             this.labelStatus.TabIndex = 2;
             this.labelStatus.Text = "Connecting";
             this.labelStatus.Click += new System.EventHandler(this.labelStatus_Click);

@@ -1,4 +1,5 @@
 using Rido.IoTClient;
+using System.Drawing.Design;
 
 namespace smart_lightbulb_winforms;
 
@@ -19,7 +20,6 @@ public partial class LightbulbForm : Form
         {
             client = await smartlightbulb.CreateClientAsync(new ConnectionSettings(cs));
             Properties.Settings.Default.hostname = client.ConnectionSettings.HostName;
-            Properties.Settings.Default.Save();
         }
         else
         {
@@ -149,6 +149,7 @@ public partial class LightbulbForm : Form
     {
         ArgumentNullException.ThrowIfNull(client);
         currentBattery = 100;
+        progressBar1.Value = currentBattery;
         client.Property_lastBatteryReplacement.PropertyValue = DateTime.Now;
         await client.Property_lastBatteryReplacement.ReportPropertyAsync();
     }
@@ -163,6 +164,7 @@ public partial class LightbulbForm : Form
     {
         Properties.Settings.Default.hostname = "";
         Properties.Settings.Default.battery = 100;
+        currentBattery = 100;
         Properties.Settings.Default.Save();
     }
 }
