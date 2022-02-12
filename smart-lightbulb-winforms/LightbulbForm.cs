@@ -16,6 +16,7 @@ public partial class LightbulbForm : Form
 
     private async void Form1_Load(object sender, EventArgs e)
     {
+
         if (string.IsNullOrEmpty(Properties.Settings.Default.hostname))
         {
             client = await smartlightbulb.CreateClientAsync(new ConnectionSettings(cs));

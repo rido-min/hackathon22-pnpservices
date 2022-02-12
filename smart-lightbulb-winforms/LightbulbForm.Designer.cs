@@ -59,7 +59,7 @@ partial class LightbulbForm
             // 
             this.labelStatus.AutoSize = true;
             this.labelStatus.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelStatus.Location = new System.Drawing.Point(38, 20);
+            this.labelStatus.Location = new System.Drawing.Point(38, 19);
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(89, 21);
             this.labelStatus.TabIndex = 2;
@@ -89,7 +89,7 @@ partial class LightbulbForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(498, 555);
+            this.ClientSize = new System.Drawing.Size(499, 555);
             this.Controls.Add(this.buttonReplaceBateries);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.labelStatus);
