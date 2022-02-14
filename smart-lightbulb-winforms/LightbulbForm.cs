@@ -5,7 +5,7 @@ namespace smart_lightbulb_winforms;
 
 public partial class LightbulbForm : Form
 {
-    const string cs = "IdScope=0ne00434908;Auth=X509;X509key=cert.pfx|1234";
+    const string cs = "IdScope=0ne003861C6;Auth=X509;X509key=cert.pfx|1234";
     smartlightbulb? client;
     int currentBattery = 100;
 
