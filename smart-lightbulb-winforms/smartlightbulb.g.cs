@@ -1,7 +1,7 @@
 ﻿using MQTTnet.Client;
 using Rido.IoTClient;
-using Rido.IoTClient.AzIoTHub;
-using Rido.IoTClient.AzIoTHub.TopicBindings;
+using Rido.IoTClient.Aws;
+using Rido.IoTClient.Aws.TopicBindings;
 
 namespace smart_lightbulb_winforms
 {
@@ -11,7 +11,7 @@ namespace smart_lightbulb_winforms
         Off = 0
     }
 
-    internal class smartlightbulb : IoTHubClient
+    internal class smartlightbulb : AwsClient
     {
         const string modelId = "dtmi:pnd:demo:smartlightbulb;1";
 
@@ -28,9 +28,9 @@ namespace smart_lightbulb_winforms
 
         public static async Task<smartlightbulb> CreateClientAsync(ConnectionSettings cs, CancellationToken cancellationToken = default)
         {
-            cs.ModelId = modelId;
-            var client = new smartlightbulb(await IoTHubConnectionFactory.CreateAsync(cs, cancellationToken)) { ConnectionSettings = cs };
-            client.InitialState = await client.GetTwinAsync(cancellationToken);
+            var connection = await AwsConnectionFactory.CreateAsync(cs, cancellationToken);
+            var client = new smartlightbulb(connection) { ConnectionSettings = cs };
+            client.InitialState = await client.GetShadowAsync(cancellationToken);
             return client;
         }
 

@@ -5,7 +5,7 @@ namespace smart_lightbulb_winforms;
 
 public partial class LightbulbForm : Form
 {
-    const string cs = "IdScope=0ne00434908;Auth=X509;X509key=cert.pfx|1234";
+    const string cs = "HostName=a38jrw6jte2l2x-ats.iot.us-west-1.amazonaws.com;ClientId=bulb1;Auth=X509;X509Key=cert.pfx|1234";
     smartlightbulb? client;
     int currentBattery = 100;
 
@@ -33,7 +33,7 @@ public partial class LightbulbForm : Form
             currentBattery = Properties.Settings.Default.battery;
         }
 
-        labelStatus.Text = $"{client.ConnectionSettings.DeviceId} connected to {client.ConnectionSettings.HostName}";
+        labelStatus.Text = $"{client.ConnectionSettings.ClientId} connected to {client.ConnectionSettings.HostName}";
         client.Property_lightState.OnProperty_Updated = Property_lightState_UpdateHandler;
 
         await client.Property_lightState.InitPropertyAsync(client.InitialState, LightStateEnum.On);
@@ -54,7 +54,7 @@ public partial class LightbulbForm : Form
                     Status = 203,
                     Version = 0
                 };
-                await client.Property_lightState.ReportPropertyAsync();
+                await client.Property_lightState.UpdatePropertyAsync();
                 UpdateUI();
                 
             }
@@ -82,7 +82,7 @@ public partial class LightbulbForm : Form
             Version = 0
         };
         client.Property_lightState.PropertyValue = ack;
-        await client.Property_lightState.ReportPropertyAsync();
+        await client.Property_lightState.UpdatePropertyAsync();
     }
 
     private void Toggle()
