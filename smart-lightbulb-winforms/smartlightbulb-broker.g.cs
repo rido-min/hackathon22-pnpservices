@@ -2,6 +2,7 @@
 using Rido.IoTClient;
 using Rido.IoTClient.AzBroker;
 using Rido.IoTClient.PnPMqtt.TopicBindings;
+using System.Text.Json;
 
 namespace smart_lightbulb_winforms_broker
 {
@@ -30,7 +31,7 @@ namespace smart_lightbulb_winforms_broker
         {
             cs.ModelId = modelId;
             var client = new smartlightbulb(await IoTHubBrokerConnectionFactory.CreateAsync(cs, cancellationToken)) { ConnectionSettings = cs };
-            client.InitialState = await client.GetTwinAsync(cancellationToken);
+            client.InitialState = JsonSerializer.Serialize(new { desired = "", reported = ""});// await client.GetTwinAsync(cancellationToken);
             return client;
         }
 
