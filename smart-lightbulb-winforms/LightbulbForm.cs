@@ -56,7 +56,7 @@ public partial class LightbulbForm : Form
                     Status = 203,
                     Version = 0
                 };
-                await client.Property_lightState.UpdatePropertyAsync();
+                await client.Property_lightState.ReportPropertyAsync();
                 UpdateUI();
                 
             }
@@ -84,7 +84,7 @@ public partial class LightbulbForm : Form
             Version = 0
         };
         client.Property_lightState.PropertyValue = ack;
-        await client.Property_lightState.UpdatePropertyAsync();
+        await client.Property_lightState.ReportPropertyAsync();
     }
 
     private void Toggle()
