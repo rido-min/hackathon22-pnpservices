@@ -10,20 +10,24 @@
 
     <div class="spacer" id="spacer"></div>
     <div class="block" id="connecting-div"></div>
-    <div class="block" id="explorer-div" style="visibility:hidden">
   
-       <div class="settings" id="settings-header-div">
-          <p>publish to topic:<input type="text" name="publish-topic" id="publish-topic" value="$aws/things/bulb1/shadow/get" onchange="updatePublishTopic()"></p>
-       </div>
-       <div class="settings" id="settings-div">
-          <p>string:<input type="text" name="publish-data" id="publish-data" size="45" onchange="updatePublishData()"></p>
-       </div>
-       <div class="subscribe" id="subscribe-header-div">
-          <p>subscribe to topic:<input type="text" id="subscribe-topic" name="subscribe-topic" value="$aws/things/bulb1/#" onchange="updateSubscriptionTopic()"/><input type="button" id="clear-button" name="clear" value="clear history" onclick="clearHistory()"/></p>
-       </div>
-       <div class="subscribe" id="subscribe-div">
-       </div>
+    <div>
+        <h3>bulb1</h3>
+        <div>Battery Life:  <span id="battLife"></span></div>
+        <div>Reported Status: <span id="lightState"></span> </div>
+        <div>
+            Desired Status: 
+            <input type="radio" id="stateOn" name="desiredState" value="On" onclick="toggle()"  />
+            <label for="stateOn">On</label>
+            <input type="radio" id="stateOff" name="desiredState" value="Off" onclick="toggle()" />
+            <label for="stateOff">Off</label>
+            <div>
+                <span id="lightStateDesc"></span>
+            </div>
+        </div>
+        
     </div>
+
 
     <script src="aws-iot-sdk-browser-bundle.js"></script>
     <script src="bundle.js"></script>

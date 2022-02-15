@@ -112,8 +112,8 @@ AWS.config.credentials.get(function(err, data) {
 window.mqttClientConnectHandler = function() {
     console.log('connect');
     document.getElementById("connecting-div").style.visibility = 'hidden';
-    document.getElementById("explorer-div").style.visibility = 'visible';
-    document.getElementById('subscribe-div').innerHTML = '<p><br></p>';
+    // document.getElementById("explorer-div").style.visibility = 'visible';
+    // document.getElementById('subscribe-div').innerHTML = '<p><br></p>';
     messageHistory = '';
  
     //
@@ -125,8 +125,8 @@ window.mqttClientConnectHandler = function() {
 
  window.mqttClientReconnectHandler = function() {
     console.log('reconnect');
-    document.getElementById("connecting-div").style.visibility = 'visible';
-    document.getElementById("explorer-div").style.visibility = 'hidden';
+    //document.getElementById("connecting-div").style.visibility = 'visible';
+    //document.getElementById("explorer-div").style.visibility = 'hidden';
  };
 
  window.isUndefined = function(value) {
@@ -135,13 +135,33 @@ window.mqttClientConnectHandler = function() {
 
  window.mqttClientMessageHandler = function(topic, payload) {
     console.log('message: ' + topic + ':' + payload.toString());
-    messageHistory = messageHistory + topic + ':' + payload.toString() + '</br></br>';
-    document.getElementById('subscribe-div').innerHTML = '<p>' + messageHistory + '</p>';
+    if (topic==='pnp/bulb1/telemetry') {
+        var msg = JSON.parse(payload)
+        document.getElementById('battLife').innerText = msg.batteryLife
+    }
+
+    if (topic==='$aws/things/bulb1/shadow/update') {
+        var msg = JSON.parse(payload)
+        console.log('REPORTED STATE:', msg.state.reported)    
+        if (msg &&
+            msg.state &&
+            msg.state.reported &&
+            msg.state.reported.lightState ) {
+
+            document.getElementById('lightState').innerText = msg.state.reported.lightState.value === 1 ? 'On' : 'Off'
+            document.getElementById('lightStateDesc').innerText = msg.state.reported.lightState.ad + ' [v: ' + msg.state.reported.lightState.av + ']'
+            document.getElementById('stateOn').checked = undefined
+            document.getElementById('stateOff').checked = undefined
+        }
+    }
+
+    //messageHistory = messageHistory + topic + ':' + payload.toString() + '</br></br>';
+    //document.getElementById('subscribe-div').innerHTML = '<p>' + messageHistory + '</p>';
  };
 
  window.updateSubscriptionTopic = function() {
     var subscribeTopic = document.getElementById('subscribe-topic').value;
-    document.getElementById('subscribe-div').innerHTML = '';
+    //document.getElementById('subscribe-div').innerHTML = '';
     mqttClient.unsubscribe(currentlySubscribedTopic);
     currentlySubscribedTopic = subscribeTopic;
     mqttClient.subscribe(currentlySubscribedTopic);
@@ -157,11 +177,11 @@ window.mqttClientConnectHandler = function() {
  window.updatePublishTopic = function() {};
 
  window.updatePublishData = function() {
-    var publishText = document.getElementById('publish-data').value;
-    var publishTopic = document.getElementById('publish-topic').value;
+    //var publishText = document.getElementById('publish-data').value;
+    //var publishTopic = document.getElementById('publish-topic').value;
  
-    mqttClient.publish(publishTopic, publishText);
-    document.getElementById('publish-data').value = '';
+    //mqttClient.publish(publishTopic, publishText);
+    //document.getElementById('publish-data').value = '';
  };
 
 mqttClient.on('connect', window.mqttClientConnectHandler);
@@ -171,8 +191,19 @@ mqttClient.on('message', window.mqttClientMessageHandler);
 //
 // Initialize divs.
 //
-document.getElementById('connecting-div').style.visibility = 'visible';
-document.getElementById('explorer-div').style.visibility = 'hidden';
+// document.getElementById('connecting-div').style.visibility = 'visible';
+// document.getElementById('explorer-div').style.visibility = 'hidden';
 document.getElementById('connecting-div').innerHTML = '<p>attempting to connect to aws iot...</p>';
 
+window.toggle = function () {
+    var radio = document.getElementById('stateOn')
+    mqttClient.publish('$aws/things/bulb1/shadow/update', JSON.stringify( { 
+            state : { 
+                desired : {
+                    lightState : radio.checked ? 1 : 0
+                }
+            }
+        })
+    )
+}
 },{"./aws-configuration.js":1,"aws-iot-device-sdk":"aws-iot-device-sdk","aws-sdk":"aws-sdk"}]},{},[2]);
