@@ -1,4 +1,5 @@
 using Rido.IoTClient;
+using smart_lightbulb_winforms_hub;
 using System.Drawing.Design;
 
 namespace smart_lightbulb_winforms;
@@ -107,12 +108,12 @@ public partial class LightbulbForm : Form
         if (client.Property_lightState.PropertyValue.Value == LightStateEnum.Off)
         {
             selectedText = "Turn On";
-            selectedImg = @"..\..\..\Off.jpg";
+            selectedImg =       "Off.jpg";
         }
         else
         {
             selectedText = "Turn Off";
-            selectedImg = @"..\..\..\On.jpg";
+            selectedImg = "On.jpg";
         }
 
         if (pictureBoxLightbulb.InvokeRequired)

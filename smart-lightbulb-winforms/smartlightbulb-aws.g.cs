@@ -3,7 +3,7 @@ using Rido.IoTClient;
 using Rido.IoTClient.AzIoTHub;
 using Rido.IoTClient.AzIoTHub.TopicBindings;
 
-namespace smart_lightbulb_winforms
+namespace smart_lightbulb_winforms_aws
 {
     internal enum LightStateEnum
     {
