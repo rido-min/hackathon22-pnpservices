@@ -1,5 +1,5 @@
 using Rido.IoTClient;
-using smart_lightbulb_winforms_aws;
+using smart_lightbulb_winforms_broker;
 using System.Drawing.Design;
 
 namespace smart_lightbulb_winforms;
@@ -7,7 +7,9 @@ namespace smart_lightbulb_winforms;
 public partial class LightbulbForm : Form
 {
     //const string cs = "IdScope=0ne003861C6;Auth=X509;X509key=cert.pfx|1234";
-    const string cs = "HostName=a38jrw6jte2l2x-ats.iot.us-west-1.amazonaws.com;ClientId=bulb1;Auth=X509;X509Key=cert.pfx|1234";
+    //const string cs = "HostName=a38jrw6jte2l2x-ats.iot.us-west-1.amazonaws.com;ClientId=bulb1;Auth=X509;X509Key=cert.pfx|1234";
+    const string cs = "IdScope=0ne004CB66B;Auth=X509;X509key=cert.pfx|1234";
+
     smartlightbulb? client;
     int currentBattery = 100;
 
@@ -18,17 +20,8 @@ public partial class LightbulbForm : Form
 
     private async void Form1_Load(object sender, EventArgs e)
     {
-
-        if (string.IsNullOrEmpty(Properties.Settings.Default.hostname))
-        {
-            client = await smartlightbulb.CreateClientAsync(new ConnectionSettings(cs));
-            Properties.Settings.Default.hostname = client.ConnectionSettings.HostName;
-        }
-        else
-        {
-            string host = Properties.Settings.Default.hostname;
-            client = await smartlightbulb.CreateClientAsync(new ConnectionSettings(cs) { HostName = host, IdScope = null});
-        }
+        client = await smartlightbulb.CreateClientAsync(new ConnectionSettings(cs));
+        Properties.Settings.Default.hostname = client.ConnectionSettings.HostName;
         
         if (Properties.Settings.Default.battery>0)
         {
