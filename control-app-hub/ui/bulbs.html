@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+    <script src="https://unpkg.com/moment"></script>
+    <title>Smart lightbulbs Control Center</title>
+    <link href="s.css" rel="stylesheet" />
+</head>
+<body>
+    <h1>Smart lightbulbs Control Center</h1>
+    <div id="app" class="container" v-cloak>
+        <div>
+            <h3>bulb1</h3>
+            <div>Battery Life: {{battLife}}</div>
+            <div>Reported Status: {{lightState}} </div>
+            <div>
+                Desired Status: 
+                <input type="radio" id="stateOn" name="desiredState" value="On" v-model="desiredState" />
+                <label for="stateOn">On</label>
+                <input type="radio" id="stateOff" name="desiredState" value="Off" v-model="desiredState"/>
+                <label for="stateOff">Off</label>
+                <div>
+                    {{lightStateDesc}}
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <script src="bulbs.js" type="module"></script>
+</body>
+</html>
