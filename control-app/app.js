@@ -23,7 +23,8 @@ const router = express.Router()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/api', router)
-app.use(express.static('ui'))
+app.use(express.static('wwwroot'))
+
 
 const server = http.createServer(app)
 const wss = new WebSocket.Server({ server })
