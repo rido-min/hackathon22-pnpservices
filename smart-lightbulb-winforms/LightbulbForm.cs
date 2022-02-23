@@ -1,14 +1,15 @@
 using Rido.IoTClient;
-using smart_lightbulb_winforms_broker;
+using smart_lightbulb_winforms_hub;
 using System.Drawing.Design;
 
 namespace smart_lightbulb_winforms;
 
 public partial class LightbulbForm : Form
 {
+    const string cs = "HostName=ridox.azure-devices.net;DeviceId=swick-bulb3;SharedAccessKey=uG/cqg2ehS2lEZ5oXk212pGGKfapTliV7G/F8Pnf1yE=";
     //const string cs = "IdScope=0ne003861C6;Auth=X509;X509key=cert.pfx|1234";
     //const string cs = "HostName=a38jrw6jte2l2x-ats.iot.us-west-1.amazonaws.com;ClientId=bulb1;Auth=X509;X509Key=cert.pfx|1234";
-    const string cs = "IdScope=0ne004CB66B;Auth=X509;X509key=cert.pfx|1234";
+    //const string cs = "IdScope=0ne0020D67C;Auth=X509;X509key=cert.pfx|1234";
 
     smartlightbulb? client;
     int currentBattery = 100;
