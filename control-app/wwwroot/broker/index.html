@@ -7,11 +7,27 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
     <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
     <script src="https://unpkg.com/moment"></script>
-    <title>Smart lightbulbs Control Center</title>
+    <title>Hub Broker. Smart lightbulbs Control Center</title>
     <link href="s.css" rel="stylesheet" />
 </head>
 <body>
-    <h1>Smart lightbulbs Control Center</h1>
+    <h1>IoTHub Broker. Smart lightbulbs Control Center</h1>
+    <div style="display:flex;background-color: azure;">
+        <div>
+            <img src="../mqtt.png" width="60">
+        </div>
+        <div style="margin-left:10px">
+            <div>
+                HostName: broker.azure-devices.net
+            </div>
+            <div>
+                Auth: Device connection string
+            </div>
+            <div>
+                SDKs: MQTT.js websockets (running in the browser)
+            </div>
+        </div>
+    </div>
     <div id="app" class="container" v-cloak>
         <div>
             <h3>bulb1</h3>
