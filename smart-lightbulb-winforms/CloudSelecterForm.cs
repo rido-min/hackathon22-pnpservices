@@ -173,9 +173,8 @@ namespace smart_lightbulb_winforms
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(75, 293);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 15);
+            this.label2.Size = new System.Drawing.Size(0, 15);
             this.label2.TabIndex = 5;
-            this.label2.Text = "label2";
             // 
             // CloudSelecterForm
             // 
@@ -223,9 +222,9 @@ namespace smart_lightbulb_winforms
 
         private async void buttonAccept_Click(object sender, EventArgs e)
         {
-
             if (radioButton1.Checked)
             {
+                label2.Text = "Provisioning...";
                 if (textBox1.Text.StartsWith("0ne"))
                 {
                     connectionSettings.IdScope = textBox1.Text.Trim();
@@ -243,6 +242,7 @@ namespace smart_lightbulb_winforms
             }
             if (radioButton3.Checked)
             {
+                label2.Text = "Provisioning...";
                 if (textBox3.Text.StartsWith("0ne"))
                 {
                     connectionSettings.IdScope = textBox3.Text.Trim();
@@ -254,8 +254,6 @@ namespace smart_lightbulb_winforms
                     connectionSettings.HostName = textBox3.Text.Trim();
                 }
             }
-            label2.Text = connectionSettings.ToString();
-            System.Threading.Thread.Sleep(1000);
             this.DialogResult = DialogResult.OK;
         }
 
