@@ -93,7 +93,7 @@ namespace ThingsApp.IoT_Platforms
         {
             ObservableCollection<BaseDevice> devices = new ObservableCollection<BaseDevice>();
             devices.Add(new LightFixture("bulb1"));
-            devices.Add(new BaseDevice("bulb3"));
+            devices.Add(new LightFixture("bulb3"));
             return Task.FromResult(devices);
         }
 
