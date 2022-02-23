@@ -29,9 +29,11 @@ namespace ThingsApp
         //    "", // iothub name
         //    "" // service saskey
         //);
-        public static IIotPlatform IotPlatform = new AWSIotCore(
-            "HostName=a38jrw6jte2l2x-ats.iot.us-west-1.amazonaws.com;ClientId=servicecert;Auth=X509;X509Key=servicecert.pfx|1234"
+        //public static IIotPlatform IotPlatform = new AWSIotCore(
+        //    "HostName=a38jrw6jte2l2x-ats.iot.us-west-1.amazonaws.com;ClientId=servicecert;Auth=X509;X509Key=servicecert.pfx|1234"
+        //    );
+        public static IIotPlatform IotPlatform = new MqttBroker(
+            "HostName=broker.azure-devices.net;DeviceId=service;SharedAccessKey=MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDA="
             );
-
     }
 }
