@@ -230,6 +230,7 @@ namespace smart_lightbulb_winforms
                 {
                     connectionSettings.IdScope = textBox1.Text.Trim();
                     await DpsClient.ProvisionIfNeededAsync(connectionSettings);
+                    connectionSettings.ClientId = GetCNFromCertSubject(pwdForm.Certificate.SubjectName.Name);
                     connectionSettings.IdScope = String.Empty;
                 }
                 else
@@ -250,6 +251,7 @@ namespace smart_lightbulb_winforms
                     connectionSettings.IdScope = textBox3.Text.Trim();
                     await DpsClient.ProvisionIfNeededAsync(connectionSettings);
                     connectionSettings.IdScope = String.Empty;
+                    connectionSettings.ClientId = GetCNFromCertSubject(pwdForm.Certificate.SubjectName.Name);
                 }
                 else
                 {
