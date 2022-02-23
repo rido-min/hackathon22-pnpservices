@@ -2,22 +2,18 @@
 using Rido.IoTClient;
 using Rido.IoTClient.Aws;
 using Rido.IoTClient.Aws.TopicBindings;
+using smart_lightbulb_winforms;
 
 namespace smart_lightbulb_winforms_aws
 {
-    internal enum LightStateEnum
-    {
-        On = 1,
-        Off = 0
-    }
 
-    internal class smartlightbulb : AwsClient
+    internal class smartlightbulb : AwsClient, Ismartlightbulb
     {
         const string modelId = "dtmi:pnd:demo:smartlightbulb;1";
 
-        public Telemetry<int> Telemetry_batteryLife;
-        public ReadOnlyProperty<DateTime> Property_lastBatteryReplacement;
-        public WritableProperty<LightStateEnum> Property_lightState;
+        public ITelemetry<int> Telemetry_batteryLife { get; set; }
+        public IReadOnlyProperty<DateTime> Property_lastBatteryReplacement { get; set; }
+        public IWritableProperty<LightStateEnum> Property_lightState { get; set; }
 
         public smartlightbulb(IMqttClient connection) : base(connection)
         {

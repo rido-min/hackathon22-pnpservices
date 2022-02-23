@@ -2,23 +2,20 @@
 using Rido.IoTClient;
 using Rido.IoTClient.AzBroker;
 using Rido.IoTClient.PnPMqtt.TopicBindings;
+using smart_lightbulb_winforms;
 using System.Text.Json;
 
 namespace smart_lightbulb_winforms_broker
 {
-    internal enum LightStateEnum
-    {
-        On = 1,
-        Off = 0
-    }
+ 
 
-    internal class smartlightbulb : IoTHubBrokerClient
+    internal class smartlightbulb : IoTHubBrokerClient, Ismartlightbulb
     {
         const string modelId = "dtmi:pnd:demo:smartlightbulb;1";
 
-        public Telemetry<int> Telemetry_batteryLife;
-        public ReadOnlyProperty<DateTime> Property_lastBatteryReplacement;
-        public WritableProperty<LightStateEnum> Property_lightState;
+        public ITelemetry<int> Telemetry_batteryLife { get; set; }
+        public IReadOnlyProperty<DateTime> Property_lastBatteryReplacement { get; set; }
+        public IWritableProperty<LightStateEnum> Property_lightState { get; set; }
 
         public smartlightbulb(IMqttClient connection) : base(connection)
         {
