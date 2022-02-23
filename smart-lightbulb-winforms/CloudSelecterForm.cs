@@ -34,6 +34,7 @@ namespace smart_lightbulb_winforms
         public ConnectionSettings connectionSettings { get; set; } = new ConnectionSettings() { Auth = "X509"};
         public CloudType CloudType = CloudType.IoTHub;
         public string pfxPath { get; set; } = "cert.pfx";
+        PasswordForm pwdForm;
 
         public CloudSelecterForm()
         {
@@ -238,6 +239,7 @@ namespace smart_lightbulb_winforms
             }
             if (radioButton2.Checked)
             {
+                connectionSettings.ClientId = GetCNFromCertSubject(pwdForm.Certificate.SubjectName.Name);
                 connectionSettings.HostName = textBox2.Text.Trim();
             }
             if (radioButton3.Checked)
@@ -262,7 +264,7 @@ namespace smart_lightbulb_winforms
             openFileDialog1.FileName = "*.pfx";
             if ( openFileDialog1.ShowDialog() == DialogResult.OK )
             {
-                PasswordForm pwdForm = new PasswordForm(openFileDialog1.FileName);
+                pwdForm = new PasswordForm(openFileDialog1.FileName);
                 if (pwdForm.ShowDialog()==DialogResult.OK)
                 {
                     label1.Text = pwdForm.Certificate.SubjectName.Name + " Issuer:" + pwdForm.Certificate.IssuerName.Name;
@@ -279,11 +281,24 @@ namespace smart_lightbulb_winforms
         {
             X509Certificate2 cert = new X509Certificate2(this.pfxPath,"1234");
 
+            pwdForm = new PasswordForm("cert.pfx");
             if (cert.HasPrivateKey)
             {
+                pwdForm.Certificate = cert;
                 label1.Text = cert.SubjectName.Name + " Issuer:" + cert.IssuerName.Name;
                 connectionSettings.X509Key = pfxPath + "|" + "1234";
             }
+        }
+
+        internal static string GetCNFromCertSubject(string subject)
+        {
+            var result = subject[3..];
+            if (subject.Contains(','))
+            {
+                var posComma = result.IndexOf(',');
+                result = result[..posComma];
+            }
+            return result.Replace(" ", "");
         }
     }
 }

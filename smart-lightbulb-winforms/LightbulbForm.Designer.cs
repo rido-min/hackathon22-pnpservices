@@ -33,12 +33,14 @@ partial class LightbulbForm
             this.labelStatus = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.buttonReplaceBateries = new System.Windows.Forms.Button();
+            this.buttonConnectDisconnect = new System.Windows.Forms.Button();
+            this.buttonChangeCloud = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLightbulb)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBoxLightbulb
             // 
-            this.pictureBoxLightbulb.Location = new System.Drawing.Point(38, 66);
+            this.pictureBoxLightbulb.Location = new System.Drawing.Point(38, 101);
             this.pictureBoxLightbulb.Name = "pictureBoxLightbulb";
             this.pictureBoxLightbulb.Size = new System.Drawing.Size(300, 363);
             this.pictureBoxLightbulb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -47,7 +49,7 @@ partial class LightbulbForm
             // 
             // buttonOnOff
             // 
-            this.buttonOnOff.Location = new System.Drawing.Point(38, 470);
+            this.buttonOnOff.Location = new System.Drawing.Point(38, 505);
             this.buttonOnOff.Name = "buttonOnOff";
             this.buttonOnOff.Size = new System.Drawing.Size(75, 23);
             this.buttonOnOff.TabIndex = 1;
@@ -68,7 +70,7 @@ partial class LightbulbForm
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(38, 435);
+            this.progressBar1.Location = new System.Drawing.Point(38, 470);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(300, 30);
             this.progressBar1.Step = 1;
@@ -77,7 +79,7 @@ partial class LightbulbForm
             // 
             // buttonReplaceBateries
             // 
-            this.buttonReplaceBateries.Location = new System.Drawing.Point(205, 470);
+            this.buttonReplaceBateries.Location = new System.Drawing.Point(205, 505);
             this.buttonReplaceBateries.Name = "buttonReplaceBateries";
             this.buttonReplaceBateries.Size = new System.Drawing.Size(133, 23);
             this.buttonReplaceBateries.TabIndex = 4;
@@ -85,11 +87,33 @@ partial class LightbulbForm
             this.buttonReplaceBateries.UseVisualStyleBackColor = true;
             this.buttonReplaceBateries.Click += new System.EventHandler(this.buttonReplaceBateries_Click);
             // 
+            // buttonConnectDisconnect
+            // 
+            this.buttonConnectDisconnect.Location = new System.Drawing.Point(37, 62);
+            this.buttonConnectDisconnect.Name = "buttonConnectDisconnect";
+            this.buttonConnectDisconnect.Size = new System.Drawing.Size(125, 26);
+            this.buttonConnectDisconnect.TabIndex = 5;
+            this.buttonConnectDisconnect.Text = "Connecting";
+            this.buttonConnectDisconnect.UseVisualStyleBackColor = true;
+            this.buttonConnectDisconnect.Click += new System.EventHandler(this.buttonConnectDisconnect_Click);
+            // 
+            // buttonChangeCloud
+            // 
+            this.buttonChangeCloud.Location = new System.Drawing.Point(192, 62);
+            this.buttonChangeCloud.Name = "buttonChangeCloud";
+            this.buttonChangeCloud.Size = new System.Drawing.Size(134, 25);
+            this.buttonChangeCloud.TabIndex = 6;
+            this.buttonChangeCloud.Text = "Change Cloud";
+            this.buttonChangeCloud.UseVisualStyleBackColor = true;
+            this.buttonChangeCloud.Click += new System.EventHandler(this.buttonChangeCloud_Click);
+            // 
             // LightbulbForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(499, 555);
+            this.Controls.Add(this.buttonChangeCloud);
+            this.Controls.Add(this.buttonConnectDisconnect);
             this.Controls.Add(this.buttonReplaceBateries);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.labelStatus);
@@ -112,4 +136,6 @@ partial class LightbulbForm
     private Label labelStatus;
     private ProgressBar progressBar1;
     private Button buttonReplaceBateries;
+    private Button buttonConnectDisconnect;
+    private Button buttonChangeCloud;
 }

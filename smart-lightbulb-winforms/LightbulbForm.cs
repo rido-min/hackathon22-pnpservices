@@ -1,3 +1,4 @@
+using MQTTnet.Client;
 using Rido.IoTClient;
 using System.Drawing.Design;
 
@@ -49,7 +50,11 @@ public partial class LightbulbForm : Form
             case CloudType.IoTHubBroker:
                 client = await smart_lightbulb_winforms_broker.smartlightbulb.CreateClientAsync(cs);
                 break;
-        }    
+        }
+
+        client.Connection.DisconnectedAsync += async d => UpdateUI();
+
+        buttonConnectDisconnect.Text = "Disconnect";
 
         if (Properties.Settings.Default.battery > 0)
         {
@@ -66,7 +71,7 @@ public partial class LightbulbForm : Form
 
         UpdateUI();
 
-        while (true)
+        while (client.Connection.IsConnected)
         {
             if (currentBattery < 1)
             {
@@ -90,6 +95,8 @@ public partial class LightbulbForm : Form
             await Task.Delay(1000);
         }
     }
+
+    
 
     private async void ButtonOnOff_Click(object sender, EventArgs e)
     {
@@ -126,10 +133,25 @@ public partial class LightbulbForm : Form
         ArgumentNullException.ThrowIfNull(client);
         string selectedImg = string.Empty;
         string selectedText = string.Empty; 
+        string connectedText = string.Empty;
+        string buttonConnectText = string.Empty;
+        if (client.Connection.IsConnected)
+        {
+            buttonConnectText = "Disconnect";
+            connectedText = $"{client.ConnectionSettings.ClientId} connected to {client.ConnectionSettings.HostName}"; ;
+        } 
+        else
+        {
+            buttonConnectText = "Connect";
+            connectedText = "Disconnected";
+        }
+
         if (client.Property_lightState.PropertyValue.Value == LightStateEnum.Off)
         {
             selectedText = "Turn On";
-            selectedImg =       "Off.jpg";
+            selectedImg =  "Off.jpg";
+            
+
         }
         else
         {
@@ -137,18 +159,28 @@ public partial class LightbulbForm : Form
             selectedImg = "On.jpg";
         }
 
-        if (pictureBoxLightbulb.InvokeRequired)
+        if (this.InvokeRequired)
         {
-            pictureBoxLightbulb.Invoke(() =>
+            this.Invoke(() =>
             {
+                labelStatus.Text = connectedText;
+                buttonConnectDisconnect.Text = buttonConnectText;
                 buttonOnOff.Text = selectedText;
                 pictureBoxLightbulb.ImageLocation = selectedImg;
+                buttonOnOff.Enabled = client.Connection.IsConnected;
+                buttonReplaceBateries.Enabled = client.Connection.IsConnected;
+                progressBar1.Enabled = client.Connection.IsConnected;
             });
         }
         else
         {
+            labelStatus.Text = connectedText;
+            buttonConnectDisconnect.Text = buttonConnectText;
             buttonOnOff.Text = selectedText;
             pictureBoxLightbulb.ImageLocation = selectedImg;
+            buttonOnOff.Enabled = client.Connection.IsConnected;
+            buttonReplaceBateries.Enabled = client.Connection.IsConnected;
+            progressBar1.Enabled = client.Connection.IsConnected;
         }
     }
 
@@ -189,5 +221,41 @@ public partial class LightbulbForm : Form
         Properties.Settings.Default.battery = 100;
         currentBattery = 100;
         Properties.Settings.Default.Save();
+    }
+
+    private async void buttonConnectDisconnect_Click(object sender, EventArgs e)
+    {
+        if (client.Connection.IsConnected)
+        {
+            await client.Connection.DisconnectAsync(
+                new MqttClientDisconnectOptionsBuilder()
+                    .WithReason(MqttClientDisconnectReason.NormalDisconnection)
+                    .Build());
+            UpdateUI();
+        }
+        else
+        {
+            await RunDevice(cloudSelecterForm.connectionSettings, cloudSelecterForm.CloudType);
+            UpdateUI();
+        }
+    }
+
+    private async void buttonChangeCloud_Click(object sender, EventArgs e)
+    {
+        await client.Connection.DisconnectAsync(
+              new MqttClientDisconnectOptionsBuilder()
+                  .WithReason(MqttClientDisconnectReason.NormalDisconnection)
+                  .Build());
+        UpdateUI();
+
+        if (cloudSelecterForm.ShowDialog() == DialogResult.OK)
+        {
+            await RunDevice(cloudSelecterForm.connectionSettings, cloudSelecterForm.CloudType);
+        }
+        else
+        {
+            MessageBox.Show("Invalid Connection Settings", "InvalidConnectionSettings");
+        }
+
     }
 }
