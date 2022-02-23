@@ -9,6 +9,9 @@ public partial class LightbulbForm : Form
     //const string cs = "HostName=a38jrw6jte2l2x-ats.iot.us-west-1.amazonaws.com;ClientId=bulb1;Auth=X509;X509Key=cert.pfx|1234";
     const string cs = "IdScope=0ne004CB66B;Auth=X509;X509key=cert.pfx|1234";
 
+
+    CloudSelecterForm cloudSelecterForm;
+
     Ismartlightbulb? client;
     int currentBattery = 100;
 
@@ -19,15 +22,41 @@ public partial class LightbulbForm : Form
 
     private async void Form1_Load(object sender, EventArgs e)
     {
-        client = await smart_lightbulb_winforms_broker.smartlightbulb.CreateClientAsync(new ConnectionSettings(cs));
-        Properties.Settings.Default.hostname = client.ConnectionSettings.HostName;
         
-        if (Properties.Settings.Default.battery>0)
+        cloudSelecterForm = new CloudSelecterForm();
+        if (cloudSelecterForm.ShowDialog() == DialogResult.OK)
+        {
+            await RunDevice(cloudSelecterForm.connectionSettings, cloudSelecterForm.CloudType);
+        }
+        else
+        {
+            MessageBox.Show("Invalid Connection Settings", "InvalidConnectionSettings");
+        }    
+
+
+    }
+
+    private async Task RunDevice(ConnectionSettings cs, CloudType cloud)
+    {
+        switch (cloud)
+        {
+            case CloudType.IoTHub:
+                client = await smart_lightbulb_winforms_hub.smartlightbulb.CreateClientAsync(cs) ;
+                break;
+            case CloudType.AWS:
+                client = await smart_lightbulb_winforms_aws.smartlightbulb.CreateClientAsync(cs);
+                break;
+            case CloudType.IoTHubBroker:
+                client = await smart_lightbulb_winforms_broker.smartlightbulb.CreateClientAsync(cs);
+                break;
+        }    
+
+        if (Properties.Settings.Default.battery > 0)
         {
             currentBattery = Properties.Settings.Default.battery;
         }
 
-        labelStatus.Text = $"{client.ConnectionSettings.ClientId} connected to {client.ConnectionSettings.HostName}";
+        labelStatus.Text = $"{client.ConnectionSettings.DeviceId} connected to {client.ConnectionSettings.HostName}";
         client.Property_lightState.OnProperty_Updated = Property_lightState_UpdateHandler;
 
         await client.Property_lightState.InitPropertyAsync(client.InitialState, LightStateEnum.On);
@@ -50,7 +79,7 @@ public partial class LightbulbForm : Form
                 };
                 await client.Property_lightState.ReportPropertyAsync();
                 UpdateUI();
-                
+
             }
 
             if (client.Property_lightState.PropertyValue.Value.Equals(LightStateEnum.On))
@@ -60,7 +89,6 @@ public partial class LightbulbForm : Form
             }
             await Task.Delay(1000);
         }
-
     }
 
     private async void ButtonOnOff_Click(object sender, EventArgs e)
