@@ -123,9 +123,9 @@ namespace ThingsApp.IoT_Platforms
                                 }
                             }
                             break;
-                        case "digitalTwinChangeEvents":
+                        case "deviceLifecycle":
                             break;
-                        case "deviceConnectionStateEvents":
+                        case "deviceConnectivity":
                             break;
                         default:
                             break;
