@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="ThingsApp.Controls.LightFixtureControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ThingsApp.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <local:StateToImageConverter x:Key="imageConverter"/>
+        <Style TargetType="Grid">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=ReportedState}" Value="true">
+                    <Setter Property="Background" Value="Yellow" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <StackPanel>
+        <CheckBox Content="Desired State" IsChecked="{Binding Path=DesiredState}" HorizontalAlignment="Center" Margin="3"/>
+        <Grid>
+            <Image x:Name="img" Source="{Binding Path=ReportedState, Converter={StaticResource imageConverter}}" Width="96" Height="96" Margin="3"/>
+        </Grid>
+        <ProgressBar Value="{Binding Path=BatteryLevel}" Minimum="0" Maximum="100" Height="24" Margin="3"/>
+        <TextBlock Text="{Binding Path=Id}" MaxWidth="90" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="3"/>
+    </StackPanel>
+</UserControl>
