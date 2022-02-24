@@ -4,14 +4,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>AWS. Smart lightbulbs Control Center</title>
+    <link href="s.css" rel="stylesheet" />
 </head>
 <body>
-
+    <h1>AWS. Smart lightbulbs Control Center</h1>
+    <div style="display:flex;background-color: azure;">
+        <div>
+            <img src="../../aws_iot_core.png" width="60">
+        </div>
+        <div style="margin-left:10px">
+            <div>
+                HostName: a38jrw6jte2l2x-ats.iot.us-west-1.amazonaws.com
+            </div>
+            <div>
+                Auth: AWS Cognito
+            </div>
+            <div>
+                SDKs: AWS SDK, MQTT.js websockets (running in the browser)
+            </div>
+        </div>
+    </div>
     <div class="spacer" id="spacer"></div>
     <div class="block" id="connecting-div"></div>
   
     <div>
+        <h1>Smart lightbulbs Control Center</h1>
         <h3>bulb1</h3>
         <div>Battery Life:  <span id="battLife"></span></div>
         <div>Reported Status: <span id="lightState"></span> </div>
