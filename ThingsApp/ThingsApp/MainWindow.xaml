@@ -28,7 +28,20 @@
         <local:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
-        <ItemsControl Name="lb" ItemsSource="{Binding Path=Devices}" ItemTemplateSelector="{StaticResource templateSelector}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <ComboBox HorizontalAlignment="Right" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBoxItem x:Name="cbCentral" IsSelected="True">Azure IoT Central</ComboBoxItem>
+                <ComboBoxItem x:Name="cbHub">Azure IoT Hub</ComboBoxItem>
+                <ComboBoxItem x:Name="cbAWS">AWS IoT Core</ComboBoxItem>
+                <ComboBoxItem x:Name="cbMQTT">Azure MQTT Broker</ComboBoxItem>
+                <ComboBoxItem x:Name="cbHive">HiveMQ</ComboBoxItem>
+            </ComboBox>
+        </Grid>
+        <ItemsControl Name="lb" Grid.Row="1" ItemsSource="{Binding Path=Devices}" ItemTemplateSelector="{StaticResource templateSelector}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel/>

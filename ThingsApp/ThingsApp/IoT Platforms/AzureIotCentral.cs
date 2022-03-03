@@ -143,7 +143,7 @@ namespace ThingsApp.IoT_Platforms
             //MemoryStream stream = (MemoryStream)res.Content.ReadAsStream();
             //string text = Encoding.UTF8.GetString(stream.ToArray());
 
-            // TODO get device list from REST API
+            // TODO get device list from REST API, blocked by https://msazure.visualstudio.com/One/_workitems/edit/13509430
 
             ObservableCollection<BaseDevice> devices = new ObservableCollection<BaseDevice>();
             devices.Add(new LightFixture("bulb1"));

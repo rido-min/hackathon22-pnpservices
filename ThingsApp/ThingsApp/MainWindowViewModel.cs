@@ -23,11 +23,6 @@ namespace ThingsApp
             }
         }
 
-        public MainWindowViewModel()
-        {
-            _ = InitializeAsync();
-        }
-
         public async Task InitializeAsync()
         {
             Devices = await App.IotPlatform.GetDevicesAsync();
