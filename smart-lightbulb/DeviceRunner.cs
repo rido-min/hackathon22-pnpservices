@@ -19,7 +19,8 @@ public class DeviceRunner : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        client = await smartlightbulb.CreateClientAsync(_configuration.GetConnectionString("cs"), stoppingToken);
+        var cs = ConnectionSettings.FromConnectionString(_configuration.GetConnectionString("cs"));
+        client = await smartlightbulb.CreateClientAsync(cs, stoppingToken);
         Console.WriteLine(client.ConnectionSettings.HostName + " " + client.ConnectionSettings.DeviceId);
 
         client.Property_lightState.OnProperty_Updated = Property_lightState_UpdateHandler;
