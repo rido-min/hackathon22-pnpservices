@@ -1,8 +1,6 @@
 using Microsoft.Azure.Devices.Client;
 using Microsoft.Azure.Devices.Shared;
-using smart_lightbulb_sdk;
-using System.Drawing.Design;
-using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json;
 
@@ -32,7 +30,16 @@ public partial class LightbulbForm : Form
 
     private async Task RunDevice(string connectionString)
     {
-        dc = DeviceClient.CreateFromConnectionString(connectionString, new ClientOptions() { ModelId = "" });
+
+        var cert = X509Certificate2.CreateFromPemFile("bulb1.pem", "bulb1.key");
+        var certBulb = new X509Certificate2(cert.Export(X509ContentType.Pkcs12));
+        //X509Certificate2Collection ca = new X509Certificate2Collection();
+        //ca.ImportFromPemFile("ca.pem");
+        
+        using var auth = new DeviceAuthenticationWithX509Certificate("bulb1", certBulb);
+        dc = DeviceClient.Create("rido.azure-devices.net", auth, TransportType.Mqtt_Tcp_Only, new ClientOptions() { ModelId = "" });
+        //dc = DeviceClient.CreateFromConnectionString(connectionString, new ClientOptions() { ModelId = "" });
+
         dc.SetConnectionStatusChangesHandler((d, r) => 
         {
             isConnected = d == ConnectionStatus.Connected;
