@@ -18,6 +18,8 @@ public partial class LightbulbForm : Form
 
     DeviceClient dc;
 
+    string did = string.Empty;
+
     public LightbulbForm()
     {
         InitializeComponent();
@@ -39,6 +41,8 @@ public partial class LightbulbForm : Form
         using var auth = new DeviceAuthenticationWithX509Certificate("bulb1", certBulb);
         dc = DeviceClient.Create("rido.azure-devices.net", auth, TransportType.Mqtt_Tcp_Only, new ClientOptions() { ModelId = "" });
         //dc = DeviceClient.CreateFromConnectionString(connectionString, new ClientOptions() { ModelId = "" });
+
+        did = auth.DeviceId;
 
         dc.SetConnectionStatusChangesHandler((d, r) => 
         {
@@ -166,7 +170,7 @@ public partial class LightbulbForm : Form
         if (isConnected)
         {
             buttonConnectText = "Disconnect";
-            connectedText = $"connected"; ;
+            connectedText = $"connected {did}"; ;
         }
         else
         {
