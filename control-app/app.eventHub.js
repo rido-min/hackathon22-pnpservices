@@ -15,7 +15,7 @@ class EventHubReader {
     try {
       const eventHubConnectionString = await convertIotHubToEventHubsConnectionString(this.iotHubConnectionString)
       const consumerClient = new EventHubConsumerClient(this.consumerGroup, eventHubConnectionString)
-
+      console.log(eventHubConnectionString)
       // const partitionIds = await consumerClient.getPartitionIds()
       // console.log('The partition ids are: ', partitionIds)
 

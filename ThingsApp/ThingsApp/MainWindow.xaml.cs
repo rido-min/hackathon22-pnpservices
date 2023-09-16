@@ -42,11 +42,11 @@ namespace ThingsApp
                     break;
                 case "cbHub":
                     App.IotPlatform = new AzureIotHub(
-                        "", // IoT Hub connection string
-                        "", // eventhub endpoint
-                        "", // consumer group
-                        "", // iothub name
-                        "" // service saskey
+                        "HostName=rido.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=DJEFWjNelYj1gsCliEJCBcgi/Gyewuhf8AIoTH7pCW0=", // IoT Hub connection string
+                        "iothub-ns-rido-25236429-d96292f1d3.servicebus.windows.net", // eventhub endpoint
+                        "thingsapp", // consumer group
+                        "rido", // iothub name
+                        "DJEFWjNelYj1gsCliEJCBcgi/Gyewuhf8AIoTH7pCW0=" // service saskey
                         );
                     break;
                 case "cbAWS":

@@ -25,7 +25,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/api', router)
 app.use(express.static('wwwroot'))
 
-
 const server = http.createServer(app)
 const wss = new WebSocket.Server({ server })
 
@@ -101,8 +100,8 @@ server.listen(port, () => console.log(`IoT Express app listening on port ${port}
 
 ;(async () => {
   await eventHubReader.startReadMessage((message, date, deviceId) => {
-     // console.log(deviceId)
-     // console.log(message)
+  // console.log(deviceId)
+  // console.log(message)
     const payload = {
       IotData: message,
       MessageDate: date || Date.now().toISOString(),

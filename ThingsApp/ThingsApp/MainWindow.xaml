@@ -34,8 +34,8 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <ComboBox HorizontalAlignment="Right" SelectionChanged="ComboBox_SelectionChanged">
-                <ComboBoxItem x:Name="cbCentral" IsSelected="True">Azure IoT Central</ComboBoxItem>
-                <ComboBoxItem x:Name="cbHub">Azure IoT Hub</ComboBoxItem>
+                <ComboBoxItem x:Name="cbCentral" >Azure IoT Central</ComboBoxItem>
+                <ComboBoxItem x:Name="cbHub" IsSelected="True">Azure IoT Hub</ComboBoxItem>
                 <ComboBoxItem x:Name="cbAWS">AWS IoT Core</ComboBoxItem>
                 <ComboBoxItem x:Name="cbMQTT">Azure MQTT Broker</ComboBoxItem>
                 <ComboBoxItem x:Name="cbHive">HiveMQ</ComboBoxItem>

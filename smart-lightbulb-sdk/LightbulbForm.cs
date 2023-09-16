@@ -10,7 +10,7 @@ namespace smart_lightbulb_sdk;
 
 public partial class LightbulbForm : Form
 {
-    const string cs = "HostName=rido.azure-devices.net;DeviceId=lightbulbsas;SharedAccessKey=jVDrKNC8LrX2aHpHIb+QgTQ6U7CddV3ryue0QcoO5mM=";
+    const string cs = "HostName=rido.azure-devices.net;DeviceId=bulb1;SharedAccessKey=6gO2CUoVLLBH1hIZGGE0C90ao/H1DVOSV5Vj3PTzmXc=";
     //CloudSelecterForm cloudSelecterForm;
 
     //Ismartlightbulb? client;
@@ -104,7 +104,10 @@ public partial class LightbulbForm : Form
             {
                 Microsoft.Azure.Devices.Client.Message msg = new(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(currentBattery--)));
                 await dc.SendEventAsync(msg);
-                progressBar1.Value = currentBattery;
+                if (currentBattery > 0)
+                {
+                    progressBar1.Value = currentBattery;
+                }
             }
             await Task.Delay(1000);
         }
